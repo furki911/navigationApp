@@ -6,8 +6,9 @@ import MealDetails from "../components/MealDetails";
 const MealDetailsScreen = (props) => {
   const { route } = props;
   const mealId = route.params.mealId;
-  const meal = MEALS.find((item) => item.id === mealId);
-  const { duration, complexity, affordability, imageUrl } = meal;
+  const selectedMeal = MEALS.find((item) => item.id === mealId);
+  const { duration, complexity, affordability, imageUrl, ingredients, steps } =
+    selectedMeal;
 
   return (
     <View>
@@ -20,7 +21,13 @@ const MealDetailsScreen = (props) => {
         affordability={affordability}
       />
       <Text>Ingredients</Text>
+      {ingredients.map((ingredient) => (
+        <Text key={ingredient}>{ingredient}</Text>
+      ))}
       <Text>Steps</Text>
+      {steps.map((step) => (
+        <Text key={step}>{step}</Text>
+      ))}
     </View>
   );
 };
