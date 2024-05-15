@@ -9,7 +9,7 @@ const MealsOverviewScreen = (props) => {
     mealItem.categoryIds.includes(catId)
   );
 
-  const renderMealItem = (itemData) => <MealItem title={itemData.item.title} />;
+  const renderMealItem = (itemData) => <MealItem itemData={itemData.item} />;
 
   return (
     <View style={styles.container}>
