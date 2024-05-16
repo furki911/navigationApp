@@ -1,12 +1,22 @@
-import React from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useLayoutEffect } from "react";
+import {
+  Button,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
+import { useNavigation } from "@react-navigation/native";
 
 const MealDetailsScreen = (props) => {
   const { route } = props;
+  const navigation = useNavigation(); // or we could have just simply imported navigation directly from the pros in the above line.
+
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((item) => item.id === mealId);
 
@@ -19,6 +29,18 @@ const MealDetailsScreen = (props) => {
     ingredients,
     steps,
   } = selectedMeal;
+
+  const headerButtonPressHandler = useCallback(() => {
+    console.log("pressed!");
+  }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return <Button title="tap me!" onPress={headerButtonPressHandler} />;
+      },
+    });
+  }, [navigation, headerButtonPressHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>
