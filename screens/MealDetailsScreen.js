@@ -35,7 +35,7 @@ const MealDetailsScreen = (props) => {
         <View style={styles.listContainer}>
           <Subtitle>Ingredients</Subtitle>
           <List data={ingredients} />
-          <Subtitle>Subtitle</Subtitle>
+          <Subtitle>Steps</Subtitle>
           <List data={steps} />
         </View>
       </View>
