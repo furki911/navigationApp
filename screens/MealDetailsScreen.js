@@ -1,17 +1,11 @@
-import React, { useCallback, useLayoutEffect } from "react";
-import {
-  Button,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { useCallback, useLayoutEffect } from "react";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import { useNavigation } from "@react-navigation/native";
+import IconButton from "../components/IconButton";
 
 const MealDetailsScreen = (props) => {
   const { route } = props;
@@ -37,7 +31,14 @@ const MealDetailsScreen = (props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
-        return <Button title="tap me!" onPress={headerButtonPressHandler} />;
+        return (
+          <IconButton
+            title="tap me!"
+            onPress={headerButtonPressHandler}
+            icon="star"
+            color="white"
+          />
+        );
       },
     });
   }, [navigation, headerButtonPressHandler]);
