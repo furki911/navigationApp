@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect } from "react";
+import { useCallback, useContext, useLayoutEffect } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
@@ -6,6 +6,7 @@ import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "../components/IconButton";
+import { FavoritesContext } from "../store/context/favorites-context";
 
 const MealDetailsScreen = (props) => {
   const { route } = props;
@@ -24,9 +25,17 @@ const MealDetailsScreen = (props) => {
     steps,
   } = selectedMeal;
 
-  const headerButtonPressHandler = useCallback(() => {
-    console.log("pressed!");
-  }, []);
+  const favoriteMealsCtx = useContext(FavoritesContext);
+
+  const mealIsFavorite = favoriteMealsCtx.ids?.includes(mealId);
+
+  const changeFavoriteStatusHandler = useCallback(() => {
+    if (mealIsFavorite) {
+      favoriteMealsCtx.removeFavorite(mealId);
+    } else {
+      favoriteMealsCtx.addFavorite(mealId);
+    }
+  }, [favoriteMealsCtx, mealId, mealIsFavorite]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -34,14 +43,14 @@ const MealDetailsScreen = (props) => {
         return (
           <IconButton
             title="tap me!"
-            onPress={headerButtonPressHandler}
-            icon="star"
+            onPress={changeFavoriteStatusHandler}
+            icon={mealIsFavorite ? "star" : "star-outline"}
             color="white"
           />
         );
       },
     });
-  }, [navigation, headerButtonPressHandler]);
+  }, [navigation, changeFavoriteStatusHandler, mealIsFavorite]);
 
   return (
     <ScrollView style={styles.rootContainer}>
